@@ -7,14 +7,14 @@ import DimensionReductionApproaches as DRA
 import numpy as np
 
 class Visualization():
-    def __init__(self,preprocess_components):
+    def __init__(self,preprocess_components=None):
         self.visualizer = None
         self.preprocess_components = preprocess_components
         
     # Notice: the Y should be numbers qual to or bigger than 1
     def Fit(self,X,Y):
         if self.preprocess_components != None :
-            self.pca_subspace = DRA.DimensionReduction.PCA(X)
+            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X,n_components=self.preprocess_components)
             self.preprocess_X = np.matmul(X,self.pca_subspace)
         else :
             self.preprocess_X = X
@@ -23,18 +23,18 @@ class Visualization():
         
     def Fit_Transform(self,X,Y):
         if self.preprocess_components != None :
-            self.pca_subspace = DRA.DimensionReduction.PCA(X)
+            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X,n_components=self.preprocess_components)
             self.preprocess_X = np.matmul(X,self.pca_subspace)
         else :
             self.preprocess_X = X
-        self.X_2d = self.visualizer.fit_transform(X)
+        self.X_2d = self.visualizer.fit_transform(self.preprocess_X)
         self.labels = Y 
         
     def Visualize(self):
         target_ids = range(int(max(self.labels.ravel())))
-        colors = 'r', 'g', 'b', 'c', 'm', 'y', 'k', 'w', 'orange', 'purple'
-        for i, c in zip(target_ids, colors):
-            plt.scatter(self.X_2d[self.labels == i+1, 0], self.X_2d[self.labels == i+1, 1], label=i)
+        for i in target_ids:
+            print(self.labels==1)
+            plt.scatter(self.X_2d[(self.labels == i+1).ravel(), 0], self.X_2d[(self.labels == i+1).ravel(), 1], label=i+1)
         plt.legend()
         plt.show()
     
