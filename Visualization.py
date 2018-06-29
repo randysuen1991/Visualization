@@ -1,7 +1,7 @@
 import sys
 if 'C:\\Users\\ASUS\Dropbox\\pycode\\mine\\Dimension-Reduction-Approaches' not in sys.path :
     sys.path.append('C:\\Users\\ASUS\Dropbox\\pycode\\mine\\Dimension-Reduction-Approaches')
-from sklearn.manifold import TSNE
+from sklearn.manifold import TSNE, MDS
 import matplotlib.pyplot as plt
 import DimensionReductionApproaches as DRA
 import numpy as np
@@ -44,18 +44,32 @@ class tSNE(Visualization):
         self.visualizer = TSNE()
 
         
+# This approach is 
+class MultiDimensionalScaling(Visualization):
+    def __init__(self):
+        pass
+
 
 
 def test():
-    from sklearn import datasets
-    digits = datasets.load_digits()
-    # Take the first 500 data points: it's hard to see 1500 points
-    X = digits.data[:500]
-    y = digits.target[:500]
-    target_ids = range(len(digits.target_names))
+    import numpy as np
 
-    print(digits.target_names,target_ids)
+    from matplotlib import pyplot as plt
+    from matplotlib.collections import LineCollection
 
+    from sklearn import manifold
+    from sklearn.metrics import euclidean_distances
+    from sklearn.decomposition import PCA
+
+    n_samples = 20
+    seed = np.random.RandomState(seed=3)
+    X_true = seed.randint(0, 20, 2 * n_samples).astype(np.float)
+    X_true = X_true.reshape((n_samples, 2))
+    # Center the data
+    X_true -= X_true.mean()
+
+    similarities = euclidean_distances(X_true)
+    print(similarities[0:3,0:3])
         
 if __name__ == "__main__" :
     test()
