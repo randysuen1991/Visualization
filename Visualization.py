@@ -1,10 +1,8 @@
-import sys
-if 'C:\\Users\\ASUS\Dropbox\\pycode\\mine\\Dimension-Reduction-Approaches' not in sys.path :
-    sys.path.append('C:\\Users\\ASUS\Dropbox\\pycode\\mine\\Dimension-Reduction-Approaches')
 from sklearn.manifold import TSNE, MDS
 import matplotlib.pyplot as plt
 import DimensionReductionApproaches as DRA
 import numpy as np
+
 
 class Visualization():
     def __init__(self,preprocess_components=None):
@@ -13,8 +11,8 @@ class Visualization():
         
     # Notice: the Y should be numbers qual to or bigger than 1
     def Fit(self,X,Y):
-        if self.preprocess_components != None :
-            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X,n_components=self.preprocess_components)
+        if self.preprocess_components is not None:
+            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X, n_components=self.preprocess_components)
             self.preprocess_X = np.matmul(X,self.pca_subspace)
         else :
             self.preprocess_X = X
@@ -23,7 +21,7 @@ class Visualization():
         
     def Fit_Transform(self,X,Y):
         if self.preprocess_components != None :
-            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X,n_components=self.preprocess_components)
+            self.pca_subspace, _ = DRA.DimensionReduction.PCA(X_train=X, n_components=self.preprocess_components)
             self.preprocess_X = np.matmul(X,self.pca_subspace)
         else :
             self.preprocess_X = X
@@ -37,6 +35,7 @@ class Visualization():
             plt.scatter(self.X_2d[(self.labels == i+1).ravel(), 0], self.X_2d[(self.labels == i+1).ravel(), 1], label=i+1)
         plt.legend()
         plt.show()
+
     
 class tSNE(Visualization):
     def __init__(self,preprocess_components=None):
