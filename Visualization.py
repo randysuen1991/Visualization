@@ -31,12 +31,12 @@ class Visualization():
     def Visualize(self):
         target_ids = range(int(max(self.labels.ravel())))
         for i in target_ids:
-            print(self.labels==1)
+            print(self.labels == 1)
             plt.scatter(self.X_2d[(self.labels == i+1).ravel(), 0], self.X_2d[(self.labels == i+1).ravel(), 1], label=i+1)
         plt.legend()
         plt.show()
 
-    
+
 class tSNE(Visualization):
     def __init__(self,preprocess_components=None):
         super().__init__(preprocess_components)
